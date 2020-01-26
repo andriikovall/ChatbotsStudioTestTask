@@ -1,0 +1,29 @@
+{
+  "name": "chat-bot-studio-test-task",
+  "version": "1.0.0",
+  "description": "A repo for a test task to get an intership in Chatbots.Studio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZioVio/ChatbotsStudioTestTask.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZioVio/ChatbotsStudioTestTask/issues"
+  },
+  "homepage": "https://github.com/ZioVio/ChatbotsStudioTestTask#readme",
+  "devDependencies": {
+    "editorconfig": "^0.15.3",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
