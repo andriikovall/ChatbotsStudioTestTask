@@ -59,6 +59,7 @@ module.exports.update = async function (req, res, next) {
     if (nModified) {
       res.json({ lesson });
     } else {
+      res.status(404);
       res.json(createNotFoundResponse('Lesson', 'id', id));
     }
   } catch (err) {
