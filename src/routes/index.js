@@ -1,9 +1,17 @@
 const express = require('express');
+const { checkAuth } = require('../middleware/auth');
 
 const router = express.Router();
+
+const authRoutes = require('./auth');
 const lessonRoutes = require('./lesson');
 const teacherRoutes = require('./teacher');
 
+/**
+ * The order is crucial for auth logic
+ */
+router.use('/auth', authRoutes);
+router.use(checkAuth);
 router.use('/lesson', lessonRoutes);
 router.use('/teacher', teacherRoutes);
 
