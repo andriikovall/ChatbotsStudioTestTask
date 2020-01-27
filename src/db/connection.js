@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { DB_URL_TEMPLATE, DB_USERNAME, DB_PASSWORD } = require('./config');
+const { DB_URL_TEMPLATE, DB_USERNAME, DB_PASSWORD } = require('../config/config');
 
 
 const dbUrl = DB_URL_TEMPLATE
