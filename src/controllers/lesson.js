@@ -1,6 +1,6 @@
 const db = require('../db/entities/lesson');
 const Lesson = require('../models/lesson');
-const { createNotFoundResponse } = require('../helpers/not-found-response');
+const { createNotFoundResponse } = require('../utils/not-found-response');
 
 module.exports.getById = async function (req, res, next) {
   const { id } = req.params;
