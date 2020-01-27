@@ -1,12 +1,11 @@
 const express = require('express');
+const controllers = require('../controllers/lesson');
 
 const router = express.Router();
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  console.log(id);
-  res.send(id);
-});
-
+router.get('/:id', controllers.getById);
+router.delete('/:id', controllers.delete);
+router.post('/new', controllers.insert);
+router.put('/:id', controllers.update);
 
 module.exports = router;
