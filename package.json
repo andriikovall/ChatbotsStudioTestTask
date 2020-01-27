@@ -35,6 +35,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.9",
     "morgan": "^1.9.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "shortid": "^2.2.15"
   },
   "nodemonConfig": {
