@@ -21,3 +21,13 @@ module.exports.update = function (st) {
   return studentModel.findOneAndUpdate({ _id: st._id }, { $set: st }, { new: true })
     .populate(populateConfig);
 };
+
+module.exports.addStudentsToGroup = function (students, groupId) {
+  const updates = students.map(s => studentModel.findByIdAndUpdate(s, { group: groupId }));
+  return Promise.all(updates);
+};
+
+module.exports.removeStudentsFromGroup = function (students) {
+  const updates = students.map(s => studentModel.findByIdAndUpdate(s, { group: null }));
+  return Promise.all(updates);
+};
