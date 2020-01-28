@@ -8,6 +8,6 @@ const studentSchema = new mongoose.Schema({
 }, { versionKey: false });
 
 
-const studentModel = new mongoose.model('lesson', studentSchema);
+const studentModel = new mongoose.model('student', studentSchema);
 
 module.exports = studentModel;
