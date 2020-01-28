@@ -54,10 +54,9 @@ module.exports.update = async function (req, res, next) {
   const { id } = req.params;
   teacher._id = id;
   try {
-    const response = await db.update(teacher);
-    const { nModified } = response;
-    if (nModified) {
-      res.json({ teacher });
+    const updatedTeacher = await db.update(teacher);
+    if (updatedTeacher) {
+      res.json({ teacher: updatedTeacher });
     } else {
       res.json(createNotFoundResponse('Teacher', 'id', id));
     }
