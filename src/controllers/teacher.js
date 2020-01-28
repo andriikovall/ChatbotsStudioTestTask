@@ -34,6 +34,7 @@ module.exports.delete = async function (req, res, next) {
 };
 
 module.exports.insert = async function (req, res, next) {
+  req.body._id = undefined;
   const teacher = new Teacher(req.body);
   const valdationErr = teacher.validateSync();
   if (valdationErr) {
