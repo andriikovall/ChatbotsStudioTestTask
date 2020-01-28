@@ -26,7 +26,7 @@ module.exports.delete = async function (req, res, next) {
       res.status(404);
       res.json(createNotFoundResponse('Lesson', 'id', id));
     } else {
-      res.json(result);
+      res.json({ lesson: result });
     }
   } catch (err) {
     next(err);
