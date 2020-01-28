@@ -21,3 +21,15 @@ module.exports.update = function (group) {
   return groupModel.findOneAndUpdate({ _id: group._id }, { $set: group }, { new: true })
     .populate(populateConfig);
 };
+
+module.exports.addStudents = function (_id, students) {
+  return groupModel.findOneAndUpdate({ _id }, {
+    $push: { students: { $each: students } },
+  }, { new: true });
+};
+
+module.exports.removeStudents = function (_id, students) {
+  return groupModel.findOneAndUpdate({ _id }, {
+    $pull: { students: { $in: students } },
+  }, { new: true });
+};
