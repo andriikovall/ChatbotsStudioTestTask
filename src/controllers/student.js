@@ -1,16 +1,16 @@
-const db = require('../db/entities/teacher');
-const Teacher = require('../models/teacher');
+const db = require('../db/entities/student');
+const Student = require('../models/student');
 const { createNotFoundResponse } = require('../utils/not-found-response');
 
 module.exports.getById = async function (req, res, next) {
   const { id } = req.params;
   try {
-    const teacher = await db.getById(id);
-    if (!teacher) {
+    const student = await db.getById(id);
+    if (!student) {
       res.status(404);
-      res.json(createNotFoundResponse('Teacher', 'id', id));
+      res.json(createNotFoundResponse('Student', 'id', id));
     } else {
-      res.json({ teacher });
+      res.json({ student });
     }
   } catch (err) {
     next(err);
@@ -24,9 +24,9 @@ module.exports.delete = async function (req, res, next) {
     console.log(result);
     if (!result) {
       res.status(404);
-      res.json(createNotFoundResponse('Teacher', 'id', id));
+      res.json(createNotFoundResponse('Student', 'id', id));
     } else {
-      res.json({ teacher: result });
+      res.json({ student: result });
     }
   } catch (err) {
     next(err);
@@ -35,14 +35,14 @@ module.exports.delete = async function (req, res, next) {
 
 module.exports.insert = async function (req, res, next) {
   req.body._id = undefined;
-  const teacher = new Teacher(req.body);
-  const valdationErr = teacher.validateSync();
+  const student = new Student(req.body);
+  const valdationErr = student.validateSync();
   if (valdationErr) {
     valdationErr.status = 400;
     next(valdationErr);
   }
   try {
-    const response = await db.insert(teacher);
+    const response = await db.insert(student);
     res.status(201);
     res.json(response);
   } catch (err) {
@@ -51,15 +51,15 @@ module.exports.insert = async function (req, res, next) {
 };
 
 module.exports.update = async function (req, res, next) {
-  const teacher = new Teacher(req.body);
+  const student = new Student(req.body);
   const { id } = req.params;
-  teacher._id = id;
+  student._id = id;
   try {
-    const updatedTeacher = await db.update(teacher);
-    if (updatedTeacher) {
-      res.json({ teacher: updatedTeacher });
+    const updatedStudent = await db.update(student);
+    if (updatedStudent) {
+      res.json({ student: updatedStudent });
     } else {
-      res.json(createNotFoundResponse('Teacher', 'id', id));
+      res.json(createNotFoundResponse('Student', 'id', id));
     }
   } catch (err) {
     next(err);

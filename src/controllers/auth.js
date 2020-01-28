@@ -7,7 +7,7 @@ module.exports.checkLoginAndPassword = function (req, res, next) {
 
   if (!password || !login) {
     res.status(400).json({
-      messgae: 'Login and password fields cant be empty',
+      message: 'Login and password fields cant be empty',
     });
   }
   req.login = login;

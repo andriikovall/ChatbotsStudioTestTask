@@ -34,6 +34,7 @@ module.exports.delete = async function (req, res, next) {
 };
 
 module.exports.insert = async function (req, res, next) {
+  req.body._id = undefined;
   const lesson = new Lesson(req.body);
   const valdationErr = lesson.validateSync();
   if (valdationErr) {
@@ -54,12 +55,10 @@ module.exports.update = async function (req, res, next) {
   const { id } = req.params;
   lesson._id = id;
   try {
-    const response = await db.update(lesson);
-    const { nModified } = response;
-    if (nModified) {
-      res.json({ lesson });
+    const updatedLesson = await db.update(lesson);
+    if (updatedLesson) {
+      res.json({ lesson: updatedLesson });
     } else {
-      res.status(404);
       res.json(createNotFoundResponse('Lesson', 'id', id));
     }
   } catch (err) {

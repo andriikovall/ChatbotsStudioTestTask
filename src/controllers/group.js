@@ -1,16 +1,16 @@
-const db = require('../db/entities/teacher');
-const Teacher = require('../models/teacher');
+const db = require('../db/entities/group');
+const Group = require('../models/group');
 const { createNotFoundResponse } = require('../utils/not-found-response');
 
 module.exports.getById = async function (req, res, next) {
   const { id } = req.params;
   try {
-    const teacher = await db.getById(id);
-    if (!teacher) {
+    const group = await db.getById(id);
+    if (!group) {
       res.status(404);
-      res.json(createNotFoundResponse('Teacher', 'id', id));
+      res.json(createNotFoundResponse('Group', 'id', id));
     } else {
-      res.json({ teacher });
+      res.json({ group });
     }
   } catch (err) {
     next(err);
@@ -24,9 +24,9 @@ module.exports.delete = async function (req, res, next) {
     console.log(result);
     if (!result) {
       res.status(404);
-      res.json(createNotFoundResponse('Teacher', 'id', id));
+      res.json(createNotFoundResponse('Group', 'id', id));
     } else {
-      res.json({ teacher: result });
+      res.json({ group: result });
     }
   } catch (err) {
     next(err);
@@ -35,14 +35,14 @@ module.exports.delete = async function (req, res, next) {
 
 module.exports.insert = async function (req, res, next) {
   req.body._id = undefined;
-  const teacher = new Teacher(req.body);
-  const valdationErr = teacher.validateSync();
+  const group = new Group(req.body);
+  const valdationErr = group.validateSync();
   if (valdationErr) {
     valdationErr.status = 400;
     next(valdationErr);
   }
   try {
-    const response = await db.insert(teacher);
+    const response = await db.insert(group);
     res.status(201);
     res.json(response);
   } catch (err) {
@@ -51,15 +51,15 @@ module.exports.insert = async function (req, res, next) {
 };
 
 module.exports.update = async function (req, res, next) {
-  const teacher = new Teacher(req.body);
+  const group = new Group(req.body);
   const { id } = req.params;
-  teacher._id = id;
+  group._id = id;
   try {
-    const updatedTeacher = await db.update(teacher);
-    if (updatedTeacher) {
-      res.json({ teacher: updatedTeacher });
+    const updatedGroup = await db.update(group);
+    if (updatedGroup) {
+      res.json({ group: updatedGroup });
     } else {
-      res.json(createNotFoundResponse('Teacher', 'id', id));
+      res.json(createNotFoundResponse('Group', 'id', id));
     }
   } catch (err) {
     next(err);

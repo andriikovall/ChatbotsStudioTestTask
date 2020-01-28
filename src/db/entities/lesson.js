@@ -18,5 +18,5 @@ module.exports.deleteById = function (id) {
 };
 
 module.exports.update = function (lesson) {
-  return lessonModel.updateOne({ _id: lesson._id }, { $set: lesson });
+  return lessonModel.findOneAndUpdate({ _id: lesson._id }, { $set: lesson }, { new: true });
 };
