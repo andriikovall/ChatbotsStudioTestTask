@@ -1,11 +1,11 @@
-const db = require('../db/entities/lesson');
+const lessonDB = require('../db/entities/lesson');
 const Lesson = require('../models/lesson');
 const { createNotFoundResponse } = require('../utils/not-found-response');
 
 module.exports.getById = async function (req, res, next) {
   const { id } = req.params;
   try {
-    const lesson = await db.getById(id);
+    const lesson = await lessonDB.getById(id);
     if (!lesson) {
       res.status(404);
       res.json(createNotFoundResponse('Lesson', 'id', id));
@@ -20,7 +20,7 @@ module.exports.getById = async function (req, res, next) {
 module.exports.delete = async function (req, res, next) {
   const { id } = req.params;
   try {
-    const result = await db.deleteById(id);
+    const result = await lessonDB.deleteById(id);
     console.log(result);
     if (!result) {
       res.status(404);
@@ -42,7 +42,7 @@ module.exports.insert = async function (req, res, next) {
     next(valdationErr);
   }
   try {
-    const response = await db.insert(lesson);
+    const response = await lessonDB.insert(lesson);
     res.status(201);
     res.json(response);
   } catch (err) {
@@ -55,7 +55,7 @@ module.exports.update = async function (req, res, next) {
   const { id } = req.params;
   lesson._id = id;
   try {
-    const updatedLesson = await db.update(lesson);
+    const updatedLesson = await lessonDB.update(lesson);
     if (updatedLesson) {
       res.json({ lesson: updatedLesson });
     } else {

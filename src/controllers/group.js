@@ -1,4 +1,4 @@
-const db = require('../db/entities/group');
+const groupDB = require('../db/entities/group');
 const studentDB = require('../db/entities/student');
 const Group = require('../models/group');
 const { createNotFoundResponse } = require('../utils/not-found-response');
@@ -6,7 +6,7 @@ const { createNotFoundResponse } = require('../utils/not-found-response');
 module.exports.getById = async function (req, res, next) {
   const { id } = req.params;
   try {
-    const group = await db.getById(id);
+    const group = await groupDB.getById(id);
     if (!group) {
       res.status(404);
       res.json(createNotFoundResponse('Group', 'id', id));
@@ -21,7 +21,7 @@ module.exports.getById = async function (req, res, next) {
 module.exports.delete = async function (req, res, next) {
   const { id } = req.params;
   try {
-    const result = await db.deleteById(id);
+    const result = await groupDB.deleteById(id);
     console.log(result);
     if (!result) {
       res.status(404);
@@ -43,7 +43,7 @@ module.exports.insert = async function (req, res, next) {
     next(valdationErr);
   }
   try {
-    const response = await db.insert(group);
+    const response = await groupDB.insert(group);
     res.status(201);
     res.json(response);
   } catch (err) {
@@ -56,7 +56,7 @@ module.exports.update = async function (req, res, next) {
   const { id } = req.params;
   group._id = id;
   try {
-    const updatedGroup = await db.update(group);
+    const updatedGroup = await groupDB.update(group);
     if (updatedGroup) {
       res.json({ group: updatedGroup });
     } else {
@@ -85,9 +85,8 @@ module.exports.checkBodyForStudents = function (req, res, next) {
 
 module.exports.addStudents = async function (req, res, next) {
   const { id } = req.params;
-  // maybe move everything into 1 db module but i cant guess in which one
   try {
-    const [group] = await Promise.all([db.addStudents(id, req.studentsIds),
+    const [group] = await Promise.all([groupDB.addStudents(id, req.studentsIds),
       studentDB.addStudentsToGroup(req.studentsIds, id)]);
     res.json({
       group,
@@ -100,7 +99,7 @@ module.exports.addStudents = async function (req, res, next) {
 module.exports.removeStudents = async function (req, res, next) {
   const { id } = req.params;
   try {
-    const [group] = await Promise.all([db.removeStudents(id, req.studentsIds),
+    const [group] = await Promise.all([groupDB.removeStudents(id, req.studentsIds),
       studentDB.removeStudentsFromGroup(req.studentsIds)]);
     res.json({
       group,
