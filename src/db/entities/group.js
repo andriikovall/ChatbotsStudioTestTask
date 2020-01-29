@@ -10,7 +10,7 @@ module.exports.get = function ({ specialisationCode, limit = 10, offset = 0 }) {
   }
   const promises = [
     groupModel.countDocuments(predicate),
-    groupModel.find(predicate).limit(limit).skip(offset)
+    groupModel.find(predicate).limit(limit).skip(offset),
   ];
   return Promise.all(promises).then(([count, groups]) => ({
     count, groups,
