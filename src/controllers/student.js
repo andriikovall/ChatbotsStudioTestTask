@@ -55,7 +55,7 @@ module.exports.update = async function (req, res, next) {
   const { id } = req.params;
   student._id = id;
   // changing students to group only via addStudents and removeStudents routes of group
-  delete Student.group;
+  delete student.group;
   try {
     const updatedStudent = await studentDB.update(student);
     if (updatedStudent) {
