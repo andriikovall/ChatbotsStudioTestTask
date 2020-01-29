@@ -3,6 +3,14 @@ const studentModel = require('../../models/student');
 
 const populateConfig = { path: 'students', model: studentModel };
 
+module.exports.get = function ({ specialisationCode, limit = 10, offset = 0 }) {
+  const predicate = {};
+  if (specialisationCode != null) {
+    predicate.specialisationCode = specialisationCode;
+  }
+  return groupModel.find(predicate).skip(offset).limit(limit);
+};
+
 module.exports.getById = function (id) {
   return groupModel.findById(id)
     .populate(populateConfig);

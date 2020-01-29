@@ -2,6 +2,19 @@ const teacherDB = require('../db/entities/teacher');
 const Teacher = require('../models/teacher');
 const { createNotFoundResponse } = require('../utils/not-found-response');
 
+
+module.exports.get = async function (req, res, next) {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = parseInt(req.query.offset) || 0;
+    const teachers = await teacherDB.get(req.query, limit, offset);
+    res.json({ teachers });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
 module.exports.getById = async function (req, res, next) {
   const { id } = req.params;
   try {

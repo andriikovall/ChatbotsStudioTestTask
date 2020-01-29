@@ -2,6 +2,10 @@ const lessonModel = require('../../models/lesson');
 
 const teacherModel = require('../../models/teacher');
 
+module.exports.get = function (filters, limit, offset) {
+  return lessonModel.find(filters).limit(limit || 10).skip(offset || 0);
+};
+
 module.exports.getById = function (id) {
   return lessonModel.findById(id).populate({
     path: 'teacher', model: teacherModel,

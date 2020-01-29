@@ -1,7 +1,15 @@
 const studentModel = require('../../models/student');
 const groupModel = require('../../models/group');
 
+const escareRegExp = require('../../utils/escape-regexpr');
+
 const populateConfig = { path: 'group', model: groupModel };
+
+module.exports.get = function (filters, limit, offset) {
+  const regExprEscapedName = escareRegExp(filters.name || '');
+  const nameSearch = new RegExp(regExprEscapedName, 'i');
+  return studentModel.find({ ...filters, name: nameSearch }).limit(limit || 10).skip(offset || 0);
+};
 
 module.exports.getById = function (id) {
   return studentModel.findById(id)

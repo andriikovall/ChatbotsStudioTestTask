@@ -1,5 +1,14 @@
 const teacherModel = require('../../models/teacher');
 
+const escareRegExp = require('../../utils/escape-regexpr');
+
+
+module.exports.get = function (filters, limit, offset) {
+  const regExprEscapedName = escareRegExp(filters.name || '');
+  const nameSearch = new RegExp(regExprEscapedName, 'i');
+  return teacherModel.find({ ...filters, name: nameSearch }).limit(limit || 10).skip(offset || 0);
+};
+
 module.exports.getById = function (id) {
   return teacherModel.findById(id);
 };
