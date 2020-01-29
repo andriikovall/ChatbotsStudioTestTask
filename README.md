@@ -11,6 +11,7 @@ Use ```JSON``` file format for your requests' body
     - [Group](#group)
     - [Student](#student)
     - [Teacher](#teacher)
+ - [Restrictions](#restrictions)
 
 ### Auth 
 To authenricate this use JSON web token.   
