@@ -3,6 +3,19 @@ const studentDB = require('../db/entities/student');
 const Group = require('../models/group');
 const { createNotFoundResponse } = require('../utils/not-found-response');
 
+module.exports.get = async function (req, res, next) {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = parseInt(req.query.offset) || 0;
+    const specialisationCode = parseInt(req.query.specialisationCode) || null;
+    const groups = await groupDB.get({ limit, offset, specialisationCode });
+    res.json({ groups });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
 module.exports.getById = async function (req, res, next) {
   const { id } = req.params;
   try {
@@ -55,6 +68,7 @@ module.exports.update = async function (req, res, next) {
   const group = new Group(req.body);
   const { id } = req.params;
   group._id = id;
+  delete group.students; // changing students to group only via addStudents and removeStudents
   try {
     const updatedGroup = await groupDB.update(group);
     if (updatedGroup) {
