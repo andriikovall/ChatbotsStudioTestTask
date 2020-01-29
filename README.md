@@ -3,8 +3,8 @@
 
 Use ```JSON``` file format for your requests' body
 
-### Overwiev 
- - [Auth](#auth)
+## Overwiev 
+ - [Authentication](#authentication)
  - [Errors](#errors)
  - [Basic routes](#basic-routes)
  - [Entities' models](#entities-models)
@@ -14,7 +14,7 @@ Use ```JSON``` file format for your requests' body
     - [Teacher](#teacher)
  - [Restrictions](#restrictions)
 
-### Auth 
+## Authentication 
 To authenricate this use JSON web token.   
 Simply add this to your headers and you will be able to use any routes.
 
@@ -50,9 +50,19 @@ Sample response
 }
 ```
 
-### Errors
+## Errors
 
-Sample error
+Sample not found error
+
+```javascript
+data[property] = value;
+return {
+  message: `${entity} with such ${property} is not found`,
+  data,
+};
+```
+
+``` GET /student/some_id```
 
 ```json
 {
@@ -63,8 +73,21 @@ Sample error
 }
 ```
 
+Error handler
 
-### Basic routes
+```javascript
+const status = err.status || 500;
+res.status(status);
+res.json({
+  status,
+  error: {
+    message: err.message,
+  },
+});
+```
+
+
+## Basic routes
 
 For each entity there is at least 4 routes to interact with
 
@@ -76,11 +99,49 @@ For each entity there is at least 4 routes to interact with
 | ```PUT``` | ```/{entityName}/:id``` | Updates the entity by ```id```. For each entity you can not update certain fields. More about it further |
 | ```POST``` | ```/{entityName}/new``` | Create new entity |
 
-### Entities models
+Sample search example
+
+```GET /student/search/?name=an```
+
+```json
+{
+    "count": 1,
+    "students": [
+        {
+            "group": "QAXzfRHb",
+            "_id": "A5mca8tj",
+            "name": "anrii koval"
+        }
+    ]
+}
+```
+
+Sample getting group by id
+
+```GET /group/GW_GzGea```
+
+```json
+{
+    "group": {
+        "students": [
+            {
+                "group": "GW_GzGea",
+                "_id": "w2bTKGgI",
+                "name": "newName"
+            }
+        ],
+        "_id": "GW_GzGea",
+        "name": "newName",
+        "specialisationCode": 121
+    }
+}
+```
+
+## Entities models
 
 __Note__ that required fields have to be submited in request for creating a new entity
 
-#### Lesson
+### Lesson
 
 | __Property__ | __Type__ | __Required__ |
 | --- | --- | --- |
@@ -90,7 +151,7 @@ __Note__ that required fields have to be submited in request for creating a new 
 | place | ```String``` | - |
 | indexNumber | ```Int``` | - |
 
-#### Group
+### Group
 
 | __Property__ | __Type__ | __Required__ |
 | --- | --- | --- |
@@ -100,14 +161,14 @@ __Note__ that required fields have to be submited in request for creating a new 
 
 __Note__ that ```name``` value shiuld be unique for each group
 
-#### Student
+### Student
 
 | __Property__ | __Type__ | __Required__ |
 | --- | --- | --- |
 | name | ```String``` | + |
 | group |```String(id)``` | - |
 
-#### Teacher
+### Teacher
 
 | __Property__ | __Type__ | __Required__ |
 | --- | --- | --- |
@@ -116,7 +177,7 @@ __Note__ that ```name``` value shiuld be unique for each group
 | worksSince |```Date``` | - |
 
 
-### Restrictions
+## Restrictions
 
 Editing ```_id``` value for any entity is forbidden
 
