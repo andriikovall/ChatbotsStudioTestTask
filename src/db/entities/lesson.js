@@ -1,16 +1,16 @@
 const lessonModel = require('../../models/lesson');
-
 const teacherModel = require('../../models/teacher');
+const groupModel = require('../../models/group');
+
 
 module.exports.get = function (filters, limit, offset) {
   return lessonModel.find(filters).limit(limit || 10).skip(offset || 0);
 };
 
 module.exports.getById = function (id) {
-  return lessonModel.findById(id).populate({
-    path: 'teacher', model: teacherModel,
-    // @todo another
-  });
+  return lessonModel.findById(id)
+    .populate({ path: 'teacher', model: teacherModel })
+    .populate({ path: 'groups', model: groupModel });
 };
 
 module.exports.insert = function (lesson) {
