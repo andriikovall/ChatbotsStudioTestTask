@@ -8,8 +8,8 @@ module.exports.get = async function (req, res, next) {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
     const specialisationCode = parseInt(req.query.specialisationCode) || null;
-    const groups = await groupDB.get({ limit, offset, specialisationCode });
-    res.json({ groups });
+    const resposnse = await groupDB.get({ limit, offset, specialisationCode });
+    res.json(resposnse);
   } catch (err) {
     console.log(err);
     next(err);

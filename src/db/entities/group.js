@@ -8,7 +8,13 @@ module.exports.get = function ({ specialisationCode, limit = 10, offset = 0 }) {
   if (specialisationCode != null) {
     predicate.specialisationCode = specialisationCode;
   }
-  return groupModel.find(predicate).skip(offset).limit(limit);
+  const promises = [
+    groupModel.countDocuments(predicate),
+    groupModel.find(predicate).limit(limit).skip(offset)
+  ];
+  return Promise.all(promises).then(([count, groups]) => ({
+    count, groups,
+  }));
 };
 
 module.exports.getById = function (id) {

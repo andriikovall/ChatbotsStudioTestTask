@@ -8,7 +8,14 @@ const populateConfig = { path: 'group', model: groupModel };
 module.exports.get = function (filters, limit, offset) {
   const regExprEscapedName = escareRegExp(filters.name || '');
   const nameSearch = new RegExp(regExprEscapedName, 'i');
-  return studentModel.find({ ...filters, name: nameSearch }).limit(limit || 10).skip(offset || 0);
+  const predicate = { ...filters, name: nameSearch };
+  const promises = [
+    studentModel.countDocuments(predicate),
+    studentModel.find(predicate).limit(limit || 10).skip(offset || 0),
+  ];
+  return Promise.all(promises).then(([count, students]) => ({
+    count, students,
+  }));
 };
 
 module.exports.getById = function (id) {

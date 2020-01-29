@@ -7,8 +7,8 @@ module.exports.get = async function (req, res, next) {
   try {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
-    const students = await studentDB.get(req.query, limit, offset);
-    res.json({ students });
+    const resposnse = await studentDB.get(req.query, limit, offset);
+    res.json(resposnse);
   } catch (err) {
     console.log(err);
     next(err);

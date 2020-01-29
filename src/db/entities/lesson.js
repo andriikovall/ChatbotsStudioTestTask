@@ -4,7 +4,13 @@ const groupModel = require('../../models/group');
 
 
 module.exports.get = function (filters, limit, offset) {
-  return lessonModel.find(filters).limit(limit || 10).skip(offset || 0);
+  const promises = [
+    lessonModel.countDocuments(filters),
+    lessonModel.find(filters).limit(limit || 10).skip(offset || 0),
+  ];
+  return Promise.all(promises).then(([count, lessons]) => ({
+    count, lessons,
+  }));
 };
 
 module.exports.getById = function (id) {
