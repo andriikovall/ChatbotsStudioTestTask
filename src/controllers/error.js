@@ -13,5 +13,5 @@ module.exports.errorHandler = function (err, req, res, next) {
 };
 
 module.exports.notFoundRouteHandler = function (req, res) {
-  res.json(createNotFoundResponse('Route', 'path', req.path));
+  res.status(404).json(createNotFoundResponse('Route', 'path', req.path));
 };
