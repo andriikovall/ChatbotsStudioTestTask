@@ -9,6 +9,8 @@ const teacherRoutes = require('./teacher');
 const studentRoutes = require('./student');
 const groupRoutes = require('./group');
 
+const errorControllers = require('../controllers/error');
+
 /**
  * The order is crucial for auth logic
  */
@@ -19,18 +21,8 @@ router.use('/teacher', teacherRoutes);
 router.use('/student', studentRoutes);
 router.use('/group', groupRoutes);
 
-// error handling
-// eslint-disable-next-line no-unused-vars
-router.use((err, req, res, next) => {
-  const status = err.status || 500;
-  res.status(status);
-  res.json({
-    status,
-    error: {
-      message: err.message,
-    },
-  });
-});
+router.use(errorControllers.errorHandler);
+router.use(errorControllers.notFoundRouteHandler);
 
 
 module.exports = router;
