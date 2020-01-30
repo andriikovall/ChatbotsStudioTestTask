@@ -94,9 +94,9 @@ For each entity there is at least 4 routes to interact with
 | __Method__ | __Route__ | __Description__ |
 | --- | --- | --- |
 | ```GET``` | ```/{entityName}/search``` | Finds entities with parameters needed. All params have to be included in request query. ```limit``` and ```offset``` are optoinal. Default ones are 10 and 0 accordingly |  
-| ```GET``` | ```/{entityName}/:id``` | Finds the entity by ```id``` |
-| ```DELETE``` | ```/{entityName}/:id``` | Deletes the entity by ```id``` |
-| ```PUT``` | ```/{entityName}/:id``` | Updates the entity by ```id```. For each entity you can not update certain fields. More about it further |
+| ```GET``` | ```/{entityName}/:id``` | Finds the entity by ```id``` and returns it|
+| ```DELETE``` | ```/{entityName}/:id``` | Deletes the entity by ```id``` and returns it |
+| ```PUT``` | ```/{entityName}/:id``` | Updates the entity by ```id``` and returns it. For each entity you can not update certain fields. More about it further |
 | ```POST``` | ```/{entityName}/new``` | Create new entity |
 
 Sample search example
